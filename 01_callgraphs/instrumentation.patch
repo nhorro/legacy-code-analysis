@@ -1,0 +1,120 @@
+diff -ruN calcjob/CMakeLists.txt calcjob_instr/CMakeLists.txt
+--- calcjob/CMakeLists.txt	2025-07-05 11:44:26.616810285 -0300
++++ calcjob_instr/CMakeLists.txt	2025-07-05 12:25:46.169521062 -0300
+@@ -1,12 +1,24 @@
+ cmake_minimum_required(VERSION 3.10)
+-project(calc_jobs)
++project(calc_jobs_instr)
+ 
+ set(CMAKE_CXX_STANDARD 17)
+ 
+-add_executable(calc_jobs
++find_package(Threads REQUIRED)
++
++# Instrumentación de funciones
++set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -finstrument-functions -g")
++
++#set(CMAKE_POSITION_INDEPENDENT_CODE OFF)
++set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -no-pie")
++#set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -rdynamic")
++
++add_executable(calc_jobs_instr
+     main.cpp
++
++    instrumentation.cpp
+ )
+ 
+-target_link_libraries(calc_jobs
+-    pthread
++target_link_libraries(calc_jobs_instr PRIVATE 
++    dl 
++    Threads::Threads    
+ )
+\ No newline at end of file
+diff -ruN calcjob/instrumentation.cpp calcjob_instr/instrumentation.cpp
+--- calcjob/instrumentation.cpp	1969-12-31 21:00:00.000000000 -0300
++++ calcjob_instr/instrumentation.cpp	2025-07-05 12:32:33.052289511 -0300
+@@ -0,0 +1,59 @@
++#include "instrumentation.hpp"
++
++#include <fcntl.h>
++#include <unistd.h>
++#include <sys/syscall.h>
++#include <time.h>
++#include <cstdint>
++#include <cstdio>
++
++__attribute__((no_instrument_function))
++uint64_t get_timestamp_ns() {
++    struct timespec ts;
++    clock_gettime(CLOCK_REALTIME, &ts);
++    return (uint64_t)ts.tv_sec * 1000000000 + ts.tv_nsec;
++}
++
++__attribute__((no_instrument_function))
++pid_t get_tid() {
++    return syscall(SYS_gettid);  // Para distinguir threads
++}
++
++__attribute__((no_instrument_function))
++void write_trace(const char* event, void* func, void* caller) {
++    static int fd = -1;
++    if (fd == -1) {
++        fd = open("trace.csv", O_CREAT | O_WRONLY | O_APPEND, 0644);
++    }
++
++    char buf[256];
++    uint64_t ts = get_timestamp_ns();
++    pid_t tid = get_tid();
++    int len = snprintf(buf, sizeof(buf),
++        "%lu,%d,%s,%p,%p\n",
++        ts, tid, event, func, caller);
++
++    write(fd, buf, len);
++}
++
++extern "C" __attribute__((no_instrument_function))
++void __cyg_profile_func_enter(void* func, void* caller) {
++    static thread_local bool in_hook = false;
++    if (in_hook) return;
++    in_hook = true;
++
++    write_trace("ENTER", func, caller);
++
++    in_hook = false;
++}
++
++extern "C" __attribute__((no_instrument_function))
++void __cyg_profile_func_exit(void* func, void* caller) {
++    static thread_local bool in_hook = false;
++    if (in_hook) return;
++    in_hook = true;
++
++    write_trace("EXIT", func, caller);
++
++    in_hook = false;
++}
+\ No newline at end of file
+diff -ruN calcjob/instrumentation.hpp calcjob_instr/instrumentation.hpp
+--- calcjob/instrumentation.hpp	1969-12-31 21:00:00.000000000 -0300
++++ calcjob_instr/instrumentation.hpp	2025-07-05 12:20:53.781560139 -0300
+@@ -0,0 +1,6 @@
++#pragma once
++
++extern "C" void __cyg_profile_func_enter(void* func, void* caller);
++extern "C" void __cyg_profile_func_exit(void* func, void* caller);
++
++void resolve_addr2line(void* addr);
+diff -ruN calcjob/main.cpp calcjob_instr/main.cpp
+--- calcjob/main.cpp	2025-07-05 14:41:26.000000000 -0300
++++ calcjob_instr/main.cpp	2025-07-05 12:08:33.350745281 -0300
+@@ -1,6 +1,9 @@
+ #include "Manager.hpp"
+ 
++#include "instrumentation.hpp"
++
+ int main() {
++    printf(">>> main started\n");
+     Manager mgr;
+     mgr.start();
+ 
