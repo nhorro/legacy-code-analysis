@@ -13,8 +13,22 @@ Ejercicios de análisis de código con herramientas gratuitas o de código abier
 
 - [Calcjob](./apps/calcjob/)
 
-**Prácticas**
+## Lecciones y prácticas
 
-- [01 Call Graphs con instrumentación de GCC](./lessons/01_callgraphs/)
-- [02 Callgrind y KCachegrind](./lessons/02_callgrind/)
-- [03 LTTng (Linux Trace Toolkit Next Generation)](./lessons/03_lltng/)
+### Parte 1 - Comprensión del código
+
+- WIP
+
+### Parte 2 - Debugging
+
+- WIP
+
+### Parte 3 - Profiling
+
+- [01 Call Graphs con instrumentación de GCC](./lessons/03_profiling/01_callgraphs/)
+- [02 Callgrind y KCachegrind](./lessons/03_profiling//02_callgrind/)
+- [03 LTTng (Linux Trace Toolkit Next Generation)](./lessons/03_profiling/03_lltng/)
+
+### Parte 4 - AI
+
+- WIP

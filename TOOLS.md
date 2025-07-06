@@ -1,91 +1,95 @@
-# TOOLS.md — Mapa de herramientas de análisis y observabilidad en C++/Linux
+# 🛠️ TOOLS.md — Mapa de herramientas para Legacy C++ Analysis
 
 ---
 
-## 🎯 Objetivo
+## 🎯 Propósito
 
-Tener a mano un resumen de **qué herramientas existen**, **qué responden** y **cuándo conviene usarlas** para no perder tiempo explorando técnicas que no aplican.
-
----
-
-## 🌐 Clasificación de herramientas
-
----
-
-## 🗂️ 1️⃣ Nivel Syscall: interceptar llamadas al sistema
-
-| Herramienta | Qué hace | Ideal para |
-| ----------- | -------- | ---------- |
-| `strace` | Usa `ptrace` internamente para capturar todas las **syscalls** (open, read, write, connect, etc.). | Ver por qué un proceso se bloquea, falta de permisos, I/O inesperado. |
-| `ptrace` | API de bajo nivel para enganchar procesos. | Usado por `strace` y `gdb`. Normalmente no se usa directo. |
-| `ltrace` | Similar a `strace` pero para **librerías dinámicas** (`libc.so`, `libpthread.so`). | Ver llamadas a funciones de librerías compartidas. |
+Este archivo resume herramientas y técnicas prácticas para:
+- Entender **cómo funciona** un código legacy.
+- Ver su comportamiento en ejecución
+- Depurarlo, modificarlo y mantenerlo
+- Generar diagramas, métricas y artefactos de apoyo
 
 ---
 
-## 🗂️ 2️⃣ Nivel Función: flujo de control y coste
+## ✅ 1️⃣ Code Understanding
 
-| Herramienta | Qué hace | Ideal para |
-| ----------- | -------- | ---------- |
-| `-finstrument-functions` | GCC inyecta hooks en entrada/salida de cada función. | Obtener un callgraph secuencial. Detectar reentradas, trampas de sincronización. |
-| `Callgrind` (Valgrind) | Simula CPU y caché, cuenta instrucciones y saltos. | Identificar hotspots: dónde se consume más CPU. |
-| `perf` | Sampling real con PMU. | Profiling ligero sin recompilar. Genera callgraphs basados en muestras. |
-| `gprof2dot` + `Graphviz` | Visualiza la salida de `gprof` o `callgrind`. | Callgraphs visuales, no muestra orden cronológico. |
+### ✨ Herramientas clave
 
----
-
-## 🗂️ 3️⃣ Nivel concurrencia y flujo de eventos
-
-| Herramienta | Qué hace | Ideal para |
-| ----------- | -------- | ---------- |
-| `LTTng` + Trace Compass | Trazado kernel y user space, genera timeline, migración de threads, bloqueos. | Entender cuándo y dónde se bloquean hilos. |
-| `perf sched` | Muestra planificación de procesos/hilos. | Alternativa rápida a `sched_switch`. |
-| SystemTap / BPF | Inyecta probes dinámicos a kernel/user space. | Observabilidad avanzada en producción. |
-| `htop` / `pidstat` | Monitoreo interactivo de uso de CPU, memoria, I/O. | Inspección en tiempo real. |
+| Herramienta | Qué hace | Usos típicos |
+| ----------- | -------- | ------------- |
+| **VSCode + clangd** | Navegación semántica, autocompletado, goto. | Entender referencias cruzadas, firmas, refactor. |
+| **`ctags`** | Indexa símbolos para búsquedas con `fzf` o `vim`. | Ideal en terminal o entornos mixtos. |
+| **`cscope`** | Similar a `ctags` pero soporta queries "quién llama a esto". | Bien para código procedural grande. |
+| **Doxygen** | Extrae diagramas de clases, dependencias, callgraph estático. | Documentar y visualizar relaciones. |
+| **Graphviz** | Renderiza `.dot` de Doxygen u otros graphs. | Visualiza árboles y dependencias. |
+| **IWYU** | Analiza headers usados vs. incluidos. | Elimina includes redundantes. |
 
 ---
 
-## 🗂️ 4️⃣ Nivel memoria
+## ✅ 2️⃣ Debugging
 
-| Herramienta | Qué hace | Ideal para |
-| ----------- | -------- | ---------- |
-| Valgrind Memcheck | Detección de leaks, double free, overflows. | Debug de bugs de memoria en desarrollo. |
-| `mtrace` | Traza simple de malloc/free. | Análisis rápido sin mucho overhead. |
-| AddressSanitizer (ASan) | Instrumenta binario para detectar errores de memoria. | Rápido, ideal en CI. |
+### 🐞 Herramientas clave
 
----
-
-## 🧩 ¿Dónde encajan ptrace y strace?
-
-- `ptrace` es solo la **API** → se usa para inspeccionar registros, memoria y syscalls.
-- `strace` construye sobre `ptrace` → intercepta syscalls, muestra parámetros, resultados y errores.
-- `strace` NO sirve para profiling de rendimiento: solo para ver *qué llama a qué en el nivel kernel*.
+| Herramienta | Qué hace | Usos típicos |
+| ----------- | -------- | ------------- |
+| **GDB** | Debug interactivo: breakpoints, watchpoints, backtrace. | Diagnóstico paso a paso. |
+| **VSCode Debug** | Frontend para GDB. | Depuración interactiva más visual. |
+| **rr** (Record & Replay) | Graba la ejecución, permite debug “hacia atrás”. | Bugs esquivos o no deterministas. |
+| **Valgrind Memcheck** | Detecta leaks, uso de memoria inválida. | Ver problemas que causan crashes sutiles. |
 
 ---
 
-## ⚡ Tips prácticos
+## ✅ 3️⃣ Dynamic Analysis
 
-✅ Usa `strace` para problemas de I/O y permisos.  
-✅ Usa `Callgrind` o `perf` para ver **dónde se gasta CPU**.  
-✅ Usa LTTng/Trace Compass para entender **timeline real y bloqueos entre hilos**.  
-✅ Combina todo: correlaciona logs, tracepoints, perf y syscalls según la pregunta.
+### 🔍 Herramientas clave
 
----
-
-## 📌 Resumen rápido
-
-> **`strace`** → nivel syscall: *¿Qué hace el proceso en kernel?*  
-> **`-finstrument-functions`** → callgraph: *¿Quién llama a quién y cuándo?*  
-> **`Callgrind/perf`** → coste: *¿Dónde se va el tiempo?*  
-> **LTTng** → concurrencia real: *¿Quién bloquea a quién, cuándo y dónde?*
+| Herramienta | Qué hace | Usos típicos |
+| ----------- | -------- | ------------- |
+| **`-finstrument-functions`** | Hooks de entrada/salida de funciones. | Ver flujo real, reentrancias, orden de llamadas. |
+| **Valgrind Callgrind** | Cuenta instrucciones, saltos, simula CPU y caché. | Saber qué funciones consumen más CPU. |
+| **KCachegrind** | Visualiza la salida de Callgrind. | Analizar hotspots. |
+| **perf** | Profiling por sampling. | Análisis rápido en producción. |
+| **LTTng** + **Trace Compass** | Traza eventos kernel/user-space, genera timelines. | Analizar concurrencia, context switches, locks. |
+| **SystemTap / BPF / bpftrace** | Observabilidad avanzada sin recompilar. | Probes dinámicos en producción. |
+| **Sanitizers (ASan, TSan)** | Detecta bugs de memoria o data races. | Alternativa rápida a Valgrind, requiere recompilar. |
 
 ---
 
-## 📚 Lecturas recomendadas
+## ✅ 4️⃣ Glue & Scripts Python
 
-- `man ptrace` / `man strace`
-- [Brendan Gregg’s `perf` page](http://www.brendangregg.com/perf.html)
-- [LTTng official docs](https://lttng.org/docs/)
+### 🐍 Papel clave de Python
+
+✔️ Transformar dumps (Callgrind, Babeltrace, perf script) → CSV  
+✔️ Generar diagramas (PlantUML, Mermaid)  
+✔️ Filtrar eventos irrelevantes, agregar timestamp relativo, etc.  
+✔️ Construir pipelines reproducibles: `./scripts/` como *caja de utilidades*.
 
 ---
 
-🟢 *Este archivo sirve como mapa mental para tus próximas lecciones. Actualízalo a medida que experimentes con cada herramienta.* 🚀
+## ✅ 🗃️ Otras herramientas complementarias
+
+- **`strace`** → Traza syscalls (I/O, permisos). Usa `ptrace` internamente.
+- **`ltrace`** → Traza llamadas a librerías dinámicas.
+- **`htop`, `pidstat`** → Ver procesos en tiempo real.
+- **`pwndbg`** → Extensión de GDB para mejor visualización.
+- **AddressSanitizer** → Excelente para CI/CD rápido.
+
+---
+
+## ✅ 📌 Tips prácticos
+
+✔️ **Siempre arma tu `compile_commands.json`** → clangd y IWYU lo necesitan.  
+✔️ **Combina indexación + tracing + timeline** → ninguna herramienta por sí sola da la película completa.  
+✔️ **Versiona tus scripts Python** → Es tu *meta-herramienta* para dar forma a los datos.  
+✔️ **Mantén diagramas actualizados** → Nada más mortal que un diagram que no coincide con la base de código real.
+
+---
+
+## ✅ 📚 Referencias útiles
+
+- `man strace`, `man ptrace`, `man gdb`
+- [Brendan Gregg’s `perf` Guide](http://www.brendangregg.com/perf.html)
+- [LTTng Docs](https://lttng.org/docs/)
+- [Valgrind Manual](http://valgrind.org/docs/manual/manual.html)
+- [Graphviz Gallery](https://graphviz.org/gallery/)
