@@ -1,8 +1,3 @@
-¡Perfecto! Aquí tienes la **versión final lista para `02_callgrind/README.md`** — lista para copiar tal cual a tu repo:
-
----
-
-````markdown
 # 02_callgrind — Introducción práctica a Valgrind, Callgrind y KCachegrind
 
 ---
