@@ -1,0 +1,151 @@
+@startuml
+participant Manager
+participant Reporter
+participant Worker
+participant main
+note over main: Thread 51361
+main -> Manager: Manager::Manager()\n@ 0.000 ms
+Manager -> Worker: Worker::Worker()\n@ 0.005 ms
+Worker --> Manager: return
+Manager -> Worker: Worker::onJobDone(std::function<void (CalcJob const&)>)\n@ 0.457 ms
+Manager -> Manager: Manager::onJobDone()\n@ 0.503 ms
+Manager --> Manager: return
+Worker --> Manager: return
+Manager -> Manager: Manager::onJobDone()\n@ 0.705 ms
+Manager --> Manager: return
+Manager --> main: return
+main -> Manager: Manager::start()\n@ 0.743 ms
+Manager -> Worker: Worker::start()\n@ 0.747 ms
+Global -> Worker: Worker::start()::{lambda()#1}&& std::forward<Worker::start()::{lambda()#1}>(std::remove_reference<Worker::start()::{lambda()#1}>::type&)\n@ 0.764 ms
+Worker --> Global: return
+Global -> Worker: Worker::start()::{lambda()#1}&& std::forward<Worker::start()::{lambda()#1}>(std::remove_reference<Worker::start()::{lambda()#1}>::type&)\n@ 0.776 ms
+Worker --> Global: return
+Global -> Worker: Worker::start()::{lambda()#1}&& std::forward<Worker::start()::{lambda()#1}>(std::remove_reference<Worker::start()::{lambda()#1}>::type&)\n@ 0.789 ms
+Worker --> Global: return
+Global -> Worker: Worker::start()::{lambda()#1}&& std::forward<Worker::start()::{lambda()#1}>(std::remove_reference<Worker::start()::{lambda()#1}>::type&)\n@ 0.801 ms
+Worker --> Global: return
+Global -> Worker: Worker::start()::{lambda()#1}&& std::forward<Worker::start()::{lambda()#1}>(std::remove_reference<Worker::start()::{lambda()#1}>::type&)\n@ 0.814 ms
+Worker --> Global: return
+Global -> Worker: Worker::start()::{lambda()#1}&& std::forward<Worker::start()::{lambda()#1}>(std::remove_reference<Worker::start()::{lambda()#1}>::type&)\n@ 0.903 ms
+Worker --> Global: return
+Global -> Worker: Worker::start()::{lambda()#1}&& std::forward<Worker::start()::{lambda()#1}>(std::remove_reference<Worker::start()::{lambda()#1}>::type&)\n@ 0.915 ms
+Worker --> Global: return
+note over Global: Thread 51362
+Global -> Worker: Worker::start()::{lambda()#1}& std::__get_helper<0ul, Worker::start()::{lambda()#1}>(std::_Tuple_impl<0ul, Worker::start()::{lambda()#1}>&)\n@ 1.311 ms
+Worker --> Global: return
+Global -> Worker: Worker::start()::{lambda()#1}&& std::forward<Worker::start()::{lambda()#1}&&>(std::remove_reference<Worker::start()::{lambda()#1}&&>::type&)\n@ 1.369 ms
+Worker --> Global: return
+Global -> Worker: Worker::start()::{lambda()#1}&& std::forward<Worker::start()::{lambda()#1}>(std::remove_reference<Worker::start()::{lambda()#1}>::type&)\n@ 1.402 ms
+Worker --> Global: return
+Global -> Worker: Worker::start()::{lambda()#1}&& std::forward<Worker::start()::{lambda()#1}>(std::remove_reference<Worker::start()::{lambda()#1}>::type&)\n@ 1.426 ms
+note over Manager: Thread 51361
+Worker --> Manager: return
+note over Global: Thread 51362
+Worker --> Global: return
+note over main: Thread 51361
+Manager --> main: return
+note over Global: Thread 51362
+Global -> Worker: Worker::start()::{lambda()#1}::operator()() const\n@ 1.443 ms
+note over main: Thread 51361
+main -> Manager: Manager::submitJob(CalcJob const&)\n@ 1.447 ms
+note over Worker: Thread 51362
+Worker -> Worker: Worker::run()\n@ 1.451 ms
+note over Manager: Thread 51361
+Manager -> Worker: Worker::enqueueJob(CalcJob const&)\n@ 1.455 ms
+Worker --> Manager: return
+Manager --> main: return
+main -> Manager: Manager::submitJob(CalcJob const&)\n@ 1.700 ms
+Manager -> Worker: Worker::enqueueJob(CalcJob const&)\n@ 1.704 ms
+note over Worker: Thread 51362
+Worker -> Worker: Worker::waitCondition()\n@ 1.792 ms
+Worker --> Worker: return
+Worker -> Worker: Worker::process(CalcJob&)\n@ 1.979 ms
+Worker --> Worker: return
+Manager -> Manager: Manager::onJobDone()\n@ 2.086 ms
+Manager --> Manager: return
+Manager -> Manager: Manager::onJobDone()\n@ 2.122 ms
+Manager --> Manager: return
+Manager -> Manager: Manager::onJobDone()\n@ 2.167 ms
+Manager -> Reporter: Reporter::report(CalcJob const&)\n@ 2.176 ms
+note over Manager: Thread 51361
+Worker --> Manager: return
+Manager --> main: return
+main -> Manager: Manager::submitJob(CalcJob const&)\n@ 2.240 ms
+note over Reporter: Thread 51362
+Reporter -> Reporter: Reporter::opToStr(CalcJob::Op)\n@ 2.242 ms
+note over Manager: Thread 51361
+Manager -> Worker: Worker::enqueueJob(CalcJob const&)\n@ 2.245 ms
+note over Reporter: Thread 51362
+Reporter --> Reporter: return
+Reporter --> Manager: return
+Manager --> Manager: return
+note over Manager: Thread 51361
+Worker --> Manager: return
+Manager --> main: return
+main -> Manager: Manager::submitJob(CalcJob const&)\n@ 2.522 ms
+Manager -> Worker: Worker::enqueueJob(CalcJob const&)\n@ 2.526 ms
+Worker --> Manager: return
+Manager --> main: return
+note over Worker: Thread 51362
+Worker -> Worker: Worker::waitCondition()\n@ 2.824 ms
+Worker --> Worker: return
+Worker -> Worker: Worker::process(CalcJob&)\n@ 3.153 ms
+Worker --> Worker: return
+Manager -> Manager: Manager::onJobDone()\n@ 3.225 ms
+Manager --> Manager: return
+Manager -> Manager: Manager::onJobDone()\n@ 3.243 ms
+Manager --> Manager: return
+Manager -> Manager: Manager::onJobDone()\n@ 3.264 ms
+Manager -> Reporter: Reporter::report(CalcJob const&)\n@ 3.268 ms
+Reporter -> Reporter: Reporter::opToStr(CalcJob::Op)\n@ 3.285 ms
+Reporter --> Reporter: return
+Reporter --> Manager: return
+Manager --> Manager: return
+Worker -> Worker: Worker::waitCondition()\n@ 3.400 ms
+Worker --> Worker: return
+Worker -> Worker: Worker::process(CalcJob&)\n@ 3.557 ms
+Worker --> Worker: return
+Manager -> Manager: Manager::onJobDone()\n@ 3.618 ms
+Manager --> Manager: return
+Manager -> Manager: Manager::onJobDone()\n@ 3.635 ms
+Manager --> Manager: return
+Manager -> Manager: Manager::onJobDone()\n@ 3.656 ms
+Manager -> Reporter: Reporter::report(CalcJob const&)\n@ 3.660 ms
+Reporter -> Reporter: Reporter::opToStr(CalcJob::Op)\n@ 3.666 ms
+Reporter --> Reporter: return
+Reporter --> Manager: return
+Manager --> Manager: return
+Worker -> Worker: Worker::waitCondition()\n@ 3.765 ms
+Worker --> Worker: return
+Worker -> Worker: Worker::process(CalcJob&)\n@ 3.885 ms
+Worker --> Worker: return
+Manager -> Manager: Manager::onJobDone()\n@ 3.901 ms
+Manager --> Manager: return
+Manager -> Manager: Manager::onJobDone()\n@ 3.906 ms
+Manager --> Manager: return
+Manager -> Manager: Manager::onJobDone()\n@ 3.912 ms
+Manager -> Reporter: Reporter::report(CalcJob const&)\n@ 3.913 ms
+Reporter -> Reporter: Reporter::opToStr(CalcJob::Op)\n@ 3.914 ms
+Reporter --> Reporter: return
+Reporter --> Manager: return
+Manager --> Manager: return
+Worker -> Worker: Worker::waitCondition()\n@ 3.941 ms
+Worker --> Worker: return
+note over main: Thread 51361
+main -> Manager: Manager::stop()\n@ 1003.251 ms
+Manager -> Worker: Worker::stopWorker()\n@ 1003.261 ms
+note over Worker: Thread 51362
+Worker -> Worker: Worker::waitCondition()\n@ 1003.437 ms
+Worker --> Worker: return
+Worker --> Worker: return
+Worker --> Global: return
+note over Manager: Thread 51361
+Worker --> Manager: return
+Manager --> main: return
+main -> Manager: Manager::~Manager()\n@ 1003.889 ms
+Manager -> Worker: Worker::~Worker()\n@ 1003.894 ms
+Manager -> Manager: Manager::onJobDone()\n@ 1003.920 ms
+Manager --> Manager: return
+Worker --> Manager: return
+Manager --> main: return
+@enduml

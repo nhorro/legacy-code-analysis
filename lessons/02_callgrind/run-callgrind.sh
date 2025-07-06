@@ -1,0 +1,1 @@
+valgrind --tool=callgrind --dump-instr=yes --collect-jumps=yes --callgrind-out-file=./results/callgrind.out.%p ./calcjob/build/calc_jobs

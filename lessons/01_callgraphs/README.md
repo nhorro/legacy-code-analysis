@@ -122,6 +122,10 @@ patch -p1 < instrumentation.patch
 
 ---
 
+📚 Ver [`LEARNING.md`](./LEARNING.md) para notas y reflexiones finales.
+
+---
+
 ## 🎥 Próximos pasos
 
 * Valgrind/Callgrind para perfiles de consumo real (runtime).
