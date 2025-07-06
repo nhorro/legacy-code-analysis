@@ -3,6 +3,8 @@ Prácticas de análisis de comportamiento de aplicaciones en C++
 
 Ejercicios de análisis de código con herramientas gratuitas o de código abierto, orientadas a entender el comportamiento de código en tiempo de ejecución.
 
+![portrait](./assets/portrait.png)
+
 **Comparativa de herramientas**
 
 - [Tools](TOOLS.md)
