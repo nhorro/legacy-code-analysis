@@ -16,7 +16,5 @@ Ejercicios de análisis de código con herramientas gratuitas o de código abier
 **Prácticas**
 
 - [01 Call Graphs con instrumentación de GCC](./lessons/01_callgraphs/)
-- [02 Call Graphs con Callgrind](./lessons/02_callgrind/)
-- [03 LTTng](./lessons/03_lltng/)
-
-
+- [02 Callgrind y KCachegrind](./lessons/02_callgrind/)
+- [03 LTTng (Linux Trace Toolkit Next Generation)](./lessons/03_lltng/)
