@@ -1,7 +1,5 @@
 # 02_callgrind — Introducción práctica a Valgrind, Callgrind y KCachegrind
 
----
-
 ## 🎯 Objetivo
 
 En esta lección vamos a:
