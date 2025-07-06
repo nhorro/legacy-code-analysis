@@ -13,15 +13,17 @@ Ejercicios de análisis de código con herramientas gratuitas o de código abier
 
 - [Calcjob](./apps/calcjob/)
 
-## Lecciones y prácticas
+## Prácticas
 
 ### Parte 1 - Comprensión del código
 
-- WIP
+- [01 Doxygen, ctags y fzf]() - WIP
+- [02 clangd]() - WIP
+- [03 cloc]() - WIP
 
 ### Parte 2 - Debugging
 
-- WIP
+- [01 GDB]() - WIP
 
 ### Parte 3 - Profiling
 
@@ -29,6 +31,7 @@ Ejercicios de análisis de código con herramientas gratuitas o de código abier
 - [02 Callgrind y KCachegrind](./lessons/03_profiling//02_callgrind/)
 - [03 LTTng (Linux Trace Toolkit Next Generation)](./lessons/03_profiling/03_lltng/)
 
-### Parte 4 - AI
+### Parte 4 - Inteligencia artificial
 
-- WIP
+- [01 Indexación]()
+- [02 LMStudio]()
