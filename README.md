@@ -15,7 +15,7 @@ Ejercicios de análisis de código con herramientas gratuitas o de código abier
 
 ## Prácticas
 
-### Parte 1 - Comprensión del código
+### Parte 1 - Comprensión del código y estimaciòn de complejidad
 
 - [01 Doxygen, ctags y fzf]() - WIP
 - [02 clangd]() - WIP
@@ -31,7 +31,7 @@ Ejercicios de análisis de código con herramientas gratuitas o de código abier
 - [02 Callgrind y KCachegrind](./lessons/03_profiling//02_callgrind/)
 - [03 LTTng (Linux Trace Toolkit Next Generation)](./lessons/03_profiling/03_lltng/)
 
-### Parte 4 - Inteligencia artificial
+### Parte 4 - Comprensión/refactoring asistido por inteligencia artificial
 
-- [01 Indexación]()
-- [02 LMStudio]()
+- [01 Dump con gitingest e indexación con LLMs]()
+- [02 Generación de diagramas con PlantUML]()
