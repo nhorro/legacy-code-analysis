@@ -15,7 +15,7 @@ Ejercicios de análisis de código con herramientas gratuitas o de código abier
 
 ## Prácticas
 
-### Parte 1 - Comprensión del código y estimaciòn de complejidad
+### Parte 1 - Comprensión del código y estimación de complejidad
 
 - [01 Doxygen, ctags y fzf]() - WIP
 - [02 clangd]() - WIP
