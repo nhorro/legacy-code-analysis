@@ -1,0 +1,1 @@
+run-clang-tidy -p ../../../apps/calcjob/build/ -checks=* | tee results/clang-tidy.log
