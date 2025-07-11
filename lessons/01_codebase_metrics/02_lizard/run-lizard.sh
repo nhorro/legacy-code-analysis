@@ -1,0 +1,1 @@
+lizard ../../../apps/calcjob/ -x "*/build/*" --csv -o results/metrics.csv

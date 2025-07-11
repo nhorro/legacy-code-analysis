@@ -21,7 +21,6 @@ Esta lección cubre *sólo* la instrumentación con GCC y generación del diagra
 ```
 
 01\_callgraphs/
-├── calcjob/           # Proyecto original sin instrumentación
 ├── calcjob\_instr/     # Proyecto instrumentado (con hooks y flags extra)
 ├── scripts/           # Scripts Python: resolver direcciones, demangling, exportar CSV
 ├── results/           # Artefactos: CSV, diagramas PlantUML

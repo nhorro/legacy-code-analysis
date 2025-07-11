@@ -1,0 +1,6 @@
+../../../apps/calcjob/CMakeLists.txt
+../../../apps/calcjob/CalcJob.hpp
+../../../apps/calcjob/Manager.hpp
+../../../apps/calcjob/Reporter.hpp
+../../../apps/calcjob/Worker.hpp
+../../../apps/calcjob/main.cpp

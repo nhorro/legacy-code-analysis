@@ -1,0 +1,14 @@
+1,1,10,0,1,"Worker::Worker@13-13@../../../apps/calcjob/Worker.hpp","../../../apps/calcjob/Worker.hpp","Worker::Worker","Worker::Worker()",13,13
+3,1,26,0,3,"Worker::start@15-17@../../../apps/calcjob/Worker.hpp","../../../apps/calcjob/Worker.hpp","Worker::start","Worker::start()",15,17
+8,1,31,0,8,"Worker::stopWorker@19-26@../../../apps/calcjob/Worker.hpp","../../../apps/calcjob/Worker.hpp","Worker::stopWorker","Worker::stopWorker()",19,26
+5,1,30,1,5,"Worker::enqueueJob@28-32@../../../apps/calcjob/Worker.hpp","../../../apps/calcjob/Worker.hpp","Worker::enqueueJob","Worker::enqueueJob( const CalcJob & job)",28,32
+3,1,11,1,3,"Worker::onJobDone@34-36@../../../apps/calcjob/Worker.hpp","../../../apps/calcjob/Worker.hpp","Worker::onJobDone","Worker::onJobDone( Callback cb)",34,36
+15,6,91,0,15,"Worker::run@39-53@../../../apps/calcjob/Worker.hpp","../../../apps/calcjob/Worker.hpp","Worker::run","Worker::run()",39,53
+8,6,108,1,8,"Worker::process@55-62@../../../apps/calcjob/Worker.hpp","../../../apps/calcjob/Worker.hpp","Worker::process","Worker::process( CalcJob & job)",55,62
+5,1,53,1,5,"Reporter::report@7-11@../../../apps/calcjob/Reporter.hpp","../../../apps/calcjob/Reporter.hpp","Reporter::report","Reporter::report( const CalcJob & job)",7,11
+9,5,58,1,9,"Reporter::opToStr@14-22@../../../apps/calcjob/Reporter.hpp","../../../apps/calcjob/Reporter.hpp","Reporter::opToStr","Reporter::opToStr( CalcJob :: Op op)",14,22
+5,1,29,0,5,"Manager::Manager@7-11@../../../apps/calcjob/Manager.hpp","../../../apps/calcjob/Manager.hpp","Manager::Manager","Manager::Manager()",7,11
+3,1,11,0,3,"Manager::start@13-15@../../../apps/calcjob/Manager.hpp","../../../apps/calcjob/Manager.hpp","Manager::start","Manager::start()",13,15
+3,1,11,0,3,"Manager::stop@17-19@../../../apps/calcjob/Manager.hpp","../../../apps/calcjob/Manager.hpp","Manager::stop","Manager::stop()",17,19
+3,1,16,1,3,"Manager::submitJob@21-23@../../../apps/calcjob/Manager.hpp","../../../apps/calcjob/Manager.hpp","Manager::submitJob","Manager::submitJob( const CalcJob & job)",21,23
+11,1,115,0,13,"main@3-15@../../../apps/calcjob/main.cpp","../../../apps/calcjob/main.cpp","main","main()",3,15
